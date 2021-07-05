@@ -47,6 +47,8 @@ DJANGO_SETTINGS_MODULE=tech_test.settings.development
 
 I considered a m2m relationship between Teacher and Subject, Because it makes sense and makes it easy to filter by
 subject!
+![Screenshot from 2021-07-05 21-41-47](https://user-images.githubusercontent.com/35001360/124503572-1aac2e00-dddb-11eb-8994-0c6414b7952d.png)
+
 
 # Procedure
 

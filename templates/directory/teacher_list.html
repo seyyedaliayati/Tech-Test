@@ -4,7 +4,15 @@
 {% block title %}Teacher Directory{% endblock title %}
 
 {% block body %}
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
     <h3>Teachers</h3>
+    {% if 'last_name__startswith' in request.get_full_path or 'subjects__id' in request.get_full_path %}
+    <a href="{% url 'teacher_list' %}">Clear all filters</a>
+    {% endif %}
     <h5> Filter by first letter of last name: </h5>
     <table>
         <tr>
@@ -13,7 +21,15 @@
             {% endfor %}
         </tr>
     </table>
-    
+    <h5> Filter by subjects: </h5>
+    <table>
+        <tr>
+            {% for subject in subjects %}
+            <td><a href="?{% param_replace subjects__id=subject.id %}">{{subject}}</a></td>
+            {% endfor %}
+        </tr>
+    </table>
+    <hr>
     {% if teachers %}
         <table id="teachers">
             {% for teacher in teachers %}
@@ -26,6 +42,7 @@
         </table>
     
         {% if is_paginated %}
+            <hr>
             {% if page_obj.has_previous %}
                 <a href="?{% param_replace page=1 %}">First</a>
                 {% if page_obj.previous_page_number != 1 %}

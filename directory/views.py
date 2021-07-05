@@ -2,12 +2,13 @@ from django.views.generic import ListView
 
 from url_filter.filtersets import ModelFilterSet
 
-from .models import Teacher
+from .models import Subject, Teacher
 
 
 class TeacherFilterSet(ModelFilterSet):
     class Meta:
         model = Teacher
+        fields = ["last_name", "subjects", ]
         
 
 class TeacherListView(ListView):
@@ -22,6 +23,7 @@ class TeacherListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["subjects"] = Subject.objects.all()
         return context
     
     

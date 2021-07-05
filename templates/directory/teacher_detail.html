@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-{{ teacher }}
+    {{ teacher }}
 {% endblock title %}
 
 {% block body %}
@@ -12,7 +13,12 @@
     <p>Phone: {{ teacher.phone_number }}</p>
     <p>Room: {{ teacher.room_number }}</p>
     <p>Profile Photo:</p>
-    <img src={{ teacher.profile_picture.url }} alt="Profile Photo for {{ teacher }}" height="150px" width="150px"/>
+    {% if teacher.profile_picture %}
+        <img src="{{ teacher.profile_picture.url }}" alt="profile-photo" height="150px" width="150px"/>
+    {% else %}
+        <img src="{% static 'placeholder.png' %}" alt="placeholder" height="150px" width="150px"/>
+    {% endif %}
+
     <p>Subjects:</p>
     {% for subject in teacher.subjects.all %}
         <p> - {{ subject }} </p>

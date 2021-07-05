@@ -2,5 +2,8 @@ from django.contrib import admin
 
 from .models import Teacher, Subject
 
-admin.site.register(Teacher)
+@admin.register(Teacher)
+class TeacherAdmin(admin.ModelAdmin):
+    list_filter = ['subjects', 'last_name']
+
 admin.site.register(Subject)

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block title %}Teacher Directory{% endblock title %}
+
+{% block body %}
+    <h3>Teachers</h3>
+    <h5> Filter by first letter of last name: </h5>
+    <table>
+        <tr>
+            {% for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+            <td><a href="?{% param_replace last_name__startswith=char %}">{{char}}</a></td>
+            {% endfor %}
+        </tr>
+    </table>
+    
+    {% if teachers %}
+        <table id="teachers">
+            {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.first_name }}</td>
+                    <td>{{ teacher.last_name }}</td>
+                    <td><a href="#" class="see_detail">detail</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a href="?{% param_replace page=1 %}">First</a>
+                {% if page_obj.previous_page_number != 1 %}
+                <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                {% endif %}
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{ paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+                {% if page_obj.next_page_number != paginator.num_pages %}
+                <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                {% endif %}
+                <a href="?{% param_replace page=paginator.num_pages %}">Last</a>
+            {% endif %}
+            {% endif %}
+    {% else %}
+        <p>No teachers found!!! :(</p>
+    {% endif %}
+
+{% endblock body %}

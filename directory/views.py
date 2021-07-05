@@ -2,7 +2,7 @@ import zipfile
 import csv
 import os
 
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files import File
 from django.urls import reverse
@@ -52,7 +52,7 @@ def import_teachers(*args, **kwargs):
                 # Extract Profile Image
                 image_path = os.path.join(temp_path, row[2].lower())
                 if not os.path.exists(image_path):
-                    image_path = None
+                    image_path = os.path.join('./static/', 'placeholder.png')
                 # Create Teacher Object
                 teacher = Teacher.objects.create(
                     first_name=row[0],
@@ -110,3 +110,8 @@ class ImportDataView(LoginRequiredMixin, FormView):
 
     def get_success_url(self) -> str:
         return reverse("teacher_list")
+
+
+class TeacherDetailView(DetailView):
+    model = Teacher
+    template_name = 'directory/teacher_detail.html'

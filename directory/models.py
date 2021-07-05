@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
+from django.urls import reverse
 
 
 class Subject(models.Model):
@@ -27,6 +28,11 @@ class Teacher(models.Model):
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
+
+    
+    def get_absolute_url(self):
+        return reverse("teacher_detail", kwargs={"pk": self.pk})
+    
     
 
     class Meta:

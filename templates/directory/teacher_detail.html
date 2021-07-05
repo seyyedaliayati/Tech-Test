@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ teacher }}
+{% endblock title %}
+
+{% block body %}
+
+    <h1>{{ teacher }} </h1>
+
+    <p>Email: {{ teacher.email_address }}</p>
+    <p>Phone: {{ teacher.phone_number }}</p>
+    <p>Room: {{ teacher.room_number }}</p>
+    <p>Profile Photo:</p>
+    <img src={{ teacher.profile_picture.url }} alt="Profile Photo for {{ teacher }}" height="150px" width="150px"/>
+    <p>Subjects:</p>
+    {% for subject in teacher.subjects.all %}
+        <p> - {{ subject }} </p>
+    {% endfor %}
+
+{% endblock body %}
+
